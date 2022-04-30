@@ -28,9 +28,7 @@ const inverseNumber = () => {
   if (calculator.displayNumber === "0") {
     return;
   }
-  let numberLength = calculator.displayNumber.length;
-  calculator.displayNumber =
-    calculator.displayNumber.slice(0, numberLength - 3) * -1;
+  calculator.displayNumber = parseInt(calculator.displayNumber) * -1;
 };
 
 const handleOperator = (operator) => {
@@ -60,7 +58,16 @@ const performCalculation = () => {
       parseInt(calculator.firstNumber) - parseInt(calculator.displayNumber);
   }
 
+  const history = {
+    firstNumber: calculator.firstNumber,
+    secondNumber: calculator.displayNumber,
+    operator: calculator.operator,
+    result: result,
+  };
+
+  putHistory(history);
   calculator.displayNumber = result;
+  renderHistory();
 };
 
 const buttons = document.querySelectorAll(".button");
