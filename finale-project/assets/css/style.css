@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap");
+
+:root {
+  --white: #fff0f7;
+  --black: #141414;
+  --light-blue: #fff7ec;
+  --light-border: #ffdaa7;
+  --dark-blue: #2155cd;
+}
+body {
+  color: var(--black);
+  background-color: var(--light-blue);
+  font-size: 100%;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+}
+/* utility */
+.sr-only {
+  border: 0;
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  float: left;
+}
+
+.flex {
+  display: flex;
+  gap: var(--gap, 1rem);
+}
+.text-white {
+  color: var(--black);
+}
+.letter-spacing-2 {
+  letter-spacing: 2px;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.section {
+  padding-bottom: 60px;
+}
+.section-title {
+  margin-top: 0;
+  font-size: 2.5rem;
+}
+.section h3 {
+  font-size: 2rem;
+}
+.section-img {
+  text-align: center;
+}
+.section-img img {
+  height: 50%;
+  width: 50%;
+}
+.section-sub {
+  margin-bottom: 30px;
+}
+.card {
+  background-color: var(--white);
+  padding: 0.75em;
+  border: 1px solid var(--light-border);
+}
+/* Primary Header */
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+.primary-header {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.primary-navigation {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--light-blue);
+}
+
+.primary-navigation a {
+  text-decoration: none;
+}
+
+@media (min-width: 35em) {
+  .primary-navigation {
+    --gap: clamp(1.5rem, 5vw, 3rem);
+    padding-block: 2rem;
+    padding-inline: clamp(3rem, 10vw, 10rem);
+  }
+  .primary-navigation a > [aria-hidden="true"] {
+    font-weight: 700;
+    margin-inline-end: 0.75em;
+  }
+  .mobile-nav-toggle {
+    display: none;
+  }
+}
+@media (min-width: 35em) and (max-width: 55em) {
+  .primary-navigation a > span[aria-hidden] {
+    display: none;
+  }
+}
+
+@media (max-width: 35em) {
+  .primary-navigation {
+    --gap: 2em;
+
+    position: fixed;
+    z-index: 1000;
+    inset: 0 0 0 30%;
+
+    flex-direction: column;
+    padding: min(30vh, 10rem) 2rem;
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0%);
+  }
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 9999;
+    background-color: transparent;
+    border: 0;
+    width: 2rem;
+    aspect-ratio: 1;
+    top: 2rem;
+    right: 3rem;
+  }
+}
+@supports (backdrop-filter: blur(1rem)) {
+  .primary-navigation {
+    background: hsl(222deg 100% 76% / 50%);
+    backdrop-filter: blur(1rem);
+  }
+}
+
+/* icon */
+.hamburger .line {
+  width: 40px;
+  height: 4px;
+  background-color: var(--black);
+  display: block;
+  margin: 4px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger.is-active .line:nth-child(1),
+.hamburger.is-active .line:nth-child(3) {
+  width: 25px;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  -webkit-transform: translateX(19px) rotate(45deg);
+  -ms-transform: translateX(19px) rotate(45deg);
+  -o-transform: translateX(19px) rotate(45deg);
+  transform: translateX(19px) rotate(45deg);
+}
+
+.hamburger.is-active .line:nth-child(3) {
+  -webkit-transform: translateX(19px) rotate(-45deg);
+  -ms-transform: translateX(19px) rotate(-45deg);
+  -o-transform: translateX(19px) rotate(-45deg);
+  transform: translateX(19px) rotate(-45deg);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 85vh;
+  min-height: 400px;
+  background-color: var(--black);
+}
+.hero figure {
+  margin-top: 0;
+}
+.hero figcaption {
+  position: relative;
+  text-align: center;
+  transform: translateY(86vh);
+}
+.hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0.5;
+}
+.hero-text {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  color: var(--white);
+  font-size: 3rem;
+  text-transform: capitalize;
+  max-width: 720px;
+}
+/* content */
+.page-wrap {
+  --gap: 2rem;
+  max-width: 90vw;
+  margin: 0 auto;
+  margin-top: 90px;
+}
+.main-content {
+  flex-basis: 70%;
+  max-width: 70%;
+}
+.sidebar {
+  flex-basis: 30%;
+  max-width: 30%;
+  height: 100%;
+}
+
+.sidebar-img {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  margin: 0 auto;
+  padding-bottom: 70.5%;
+}
+.sidebar-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.sidebar-data {
+  --gap: 0.5em;
+  flex-direction: column;
+
+  margin-top: 1rem;
+}
+.sidebar-name {
+  text-align: center;
+}
+.sidebar-bio {
+  margin-bottom: 1rem;
+}
+.sidebar-social {
+  margin: 0 auto;
+}
+.sidebar-social svg {
+  width: 48px;
+  height: 48px;
+  margin: 0 10px;
+}
+.linkedin svg {
+  color: var(--dark-blue);
+}
+.github svg {
+  color: var(--black);
+}
+.section-title {
+  position: relative;
+}
+.section-title::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  width: 10%;
+  height: 5px;
+  background-color: var(--dark-blue);
+}
+
+.footer {
+  background-color: var(--light-border);
+  text-align: center;
+  padding-top: 20px;
+}
+.section-footer {
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+@media (max-width: 35em) {
+  .hero-text {
+    max-width: 350px;
+  }
+  .page-wrap {
+    flex-direction: column;
+    max-width: 85vw;
+  }
+  .main-content {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  .sidebar {
+    flex-basis: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .section-footer {
+    max-width: 80vw;
+  }
+  .section-img img {
+    width: 100%;
+    height: 100%;
+  }
+}
