@@ -7,3 +7,4 @@
 // DOM manipulation
 import "./dom/cube-page.js";
 import "./dom/cook-page.js";
+import "./dom/event.js";
