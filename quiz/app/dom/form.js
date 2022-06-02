@@ -1,11 +1,5 @@
-const submitAction = document.getElementById("form-data");
+document.addEventListener("DOMContentLoaded", () => {
+  const inputMaxLength = document.getElementById("input-name").maxLength;
 
-submitAction.addEventListener("submit", function (event) {
-  const inputName = document.getElementById("input-name").value;
-  const inputAddress = document.getElementById("input-address").value;
-  const hiddenMessage =
-    "Halo " + inputName + " bagaimana cuacanya di " + inputAddress + "?";
-
-  document.getElementById("submit-message").innerText = hiddenMessage;
-  event.preventDefault();
+  document.getElementById("character-left").innerText = inputMaxLength;
 });
