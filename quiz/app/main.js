@@ -8,4 +8,5 @@
 // import "./dom/cube-page.js";
 // import "./dom/cook-page.js";
 // import "./dom/event.js";
-import "./dom/custom-event.js";
+// import "./dom/custom-event.js";
+import "./dom/form.js";

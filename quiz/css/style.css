@@ -24,7 +24,19 @@ hr {
   border: 2px solid black;
   padding: 15px;
 }
+.form-page .contents {
+  visibility: visible;
+}
 #increment-button {
   margin-top: 5px;
   margin-bottom: 15px;
+}
+
+.form-element {
+  margin: 8px;
+  text-align: left;
+}
+
+.contents h2 {
+  text-align: center;
 }
