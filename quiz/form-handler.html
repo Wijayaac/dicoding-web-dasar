@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working with Form</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="form-page">
+    <div class="contents">
+        <h2>Isi data diri</h2>
+        <div class="form-content">
+            <form id="form-data" autocomplete="off">
+                <div class="form-element">
+                    <label for="input-name">Nama Panggilan:</label><br>
+                    <input type="text" id="input-name" name="name" placeholder="Your Name" required><br>
+                    <label id="character-count">Sisa character: <span id="character-left"></span></label>
+                </div>
+                <div class="form-element" id="field-copy">
+                    <label for="input-copy"><i>Copy</i> tulisan ini:</label><br>
+                    <input id="input-copy" type="text" name="copy" value="Hello World!" disabled><br>
+                </div>
+                <div class="form-element" id="field-paste">
+                    <label for="input-paste"><i>Paste</i> tulisan di sini:</label><br>
+                    <input id="input-paste" type="text" name="paste" placeholder="Paste sesuatu di sini"><br>
+                </div>
+                <div class="form-element" id="field-captcha">
+                    <label for="input-captcha">Tulis <i>captcha</i> berikut:</label><br>
+                    <img src="https://i.ibb.co/yy59QPB/Captcha.png" alt="Captcha"><br>
+                    <input id="input-captcha" type="text" name="captcha" placeholder="Tulis captcha di sini"><br>
+                    <p>Tekan Enter pada keyboard jika sudah selesai menulis <i>captcha</i></p>
+                </div>
+                <div class="form-element">
+                    <input type="submit" id="submit-button" value="Submit Data">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="app/main.js" type="module"></script>
+</body>
+
+</html>
