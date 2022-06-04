@@ -16,7 +16,7 @@
             <form id="form-data" autocomplete="off">
                 <div class="form-element">
                     <label for="input-name">Nama Panggilan:</label><br>
-                    <input type="text" id="input-name" name="name" placeholder="Your Name" required><br>
+                    <input type="text" maxlength="15" id="input-name" name="name" placeholder="Your Name" required><br>
                     <label id="character-count">Sisa character: <span id="character-left"></span></label>
                 </div>
                 <div class="form-element" id="field-copy">
@@ -34,7 +34,7 @@
                     <p>Tekan Enter pada keyboard jika sudah selesai menulis <i>captcha</i></p>
                 </div>
                 <div class="form-element">
-                    <input type="submit" id="submit-button" value="Submit Data">
+                    <input type="submit" id="submit-button" value="Submit Data" disabled>
                 </div>
             </form>
         </div>
