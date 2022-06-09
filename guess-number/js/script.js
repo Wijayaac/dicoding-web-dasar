@@ -68,4 +68,88 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     alert("Browser yang Anda gunakan tidak mendukung Web Storage");
   }
+
+  // Init value of each field from web storage
+  sessionUserAttempsField.innerText = sessionStorage.getItem(
+    sessionUserAttempsField
+  );
+  localTotalVictoryField.innerText = localStorage.getItem(localTotalVictoryKey);
+  localMaximumAttempField.innerText = localStorage.getItem(
+    localMaximumAttempsKey
+  );
+
+  // Button listener
+  playButton.addEventListener("click", () => {
+    sessionStorage.setItem(sessionAnswerKey, getAnswer());
+    sessionStorage.setItem(sessionUserIsPlayingKey, true);
+    beforeGameDisplay.setAttribute("hidden", true);
+    duringGameDisplay.removeAttribute("hidden");
+  });
+  answerButton1.addEventListener("click", () => {
+    sessionUserAnswerField.innerText += "1";
+    if (sessionUserAnswerField.innerText.length == 3) {
+      checkAnswer(sessionUserAnswerField.innerText);
+    }
+  });
+  answerButton2.addEventListener("click", () => {
+    sessionUserAnswerField.innerText += "2";
+    if (sessionUserAnswerField.innerText.length == 3) {
+      checkAnswer(sessionUserAnswerField.innerText);
+    }
+  });
+
+  answerButton3.addEventListener("click", () => {
+    sessionUserAnswerField.innerText += "3";
+    if (sessionUserAnswerField.innerText.length == 3) {
+      checkAnswer(sessionUserAnswerField.innerText);
+    }
+  });
+});
+
+const checkAnswer = (userGuess) => {
+  const answer = sessionStorage.getItem(sessionAnswerKey);
+  if (userGuess == answer) {
+    duringGameDisplay.setAttribute("hidden", false);
+    afterGameDisplay.removeAttribute("hidden");
+    sessionTrueAnswerField.innerText = answer;
+    updateScore();
+  } else {
+    const previousAttempAmount = parseInt(
+      sessionStorage.getItem(sessionUserAttempsKey)
+    );
+    sessionStorage.setItem(sessionUserAttempsKey, previousAttempAmount + 1);
+    sessionUserAttempsField.innerText = sessionStorage.getItem(
+      sessionUserAttempsKey
+    );
+    sessionUserAnswerField.innerText = "";
+    sessionUserWrongAnswerField.innerText = userGuess;
+  }
+};
+
+const updateScore = () => {
+  const sessionAttempsValue = parseInt(
+    sessionStorage.getItem(sessionUserAttempsKey)
+  );
+  const loaclAttempsValue = parseInt(
+    localStorage.getItem(localMaximumAttempsKey)
+  );
+  if (sessionAttempsValue > loaclAttempsValue) {
+    localStorage.setItem(localMaximumAttempsKey, sessionAttempsValue);
+    localMaximumAttempField.innerText = sessionAttempsValue;
+  }
+
+  const previousTotalVictoryAmount = parseInt(
+    localStorage.getItem(localTotalVictoryKey)
+  );
+  localStorage.setItem(localTotalVictoryKey, previousTotalVictoryAmount + 1);
+  localTotalVictoryField.innerText = localStorage.getItem(localTotalVictoryKey);
+};
+
+window.addEventListener("beforeunload", () => {
+  sessionUserAnswerField.innerText = "";
+  sessionUserWrongAnswerField.innerText = "";
+  sessionStorage.setItem(sessionUserAttempsKey, 0);
+  sessionUserAttempsField.innerText = sessionStorage.getItem(
+    sessionUserAttempsKey
+  );
 });

@@ -74,8 +74,3 @@ li {
   margin-right: 1%;
   text-align: left;
 }
-
-#after-game-display,
-#during-game-display {
-  visibility: hidden;
-}
