@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management Web Storage</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <div class="app">
+        <h1>Penambahan User Baru</h1>
+        <div class="contents">
+            <div class="child-content" id="user-form">
+                <h2>Form User Data</h2>
+                <hr>
+                <form id="form-data-user">
+                    <div class="form-element">
+                        <label for="name">Nama user:</label>
+                        <input type="text" id="name" name="name" placeholder="Nama user" value="" maxlength="10"
+                            required>
+                    </div>
+                    <div class="form-element">
+                        <label for="age">Umur user:</label>
+                        <input type="text" name="age" id="age" placeholder="Umur user" value="" maxlength="2" required>
+                    </div>
+                    <div class="form-element">
+                        <label for="location">Domisili user:</label>
+                        <input type="text" name="location" id="location" placeholder="Domisili user" value=""
+                            maxlength="10" required>
+                    </div>
+                    <div class="form-element">
+                        <input type="submit" value="Submit Data" id="submit-button">
+                    </div>
+                </form>
+            </div>
+            <div class="child-content" id="user-list">
+                <h2>User List</h2>
+                <hr>
+                <table id="user-list-table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Umur</th>
+                            <th>Domisili</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list-detail"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="assets/script.js" defer></script>
+</body>
+
+</html>
