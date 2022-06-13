@@ -1,11 +1,15 @@
 const todos = [];
 const RENDER_EVENT = "render-todo";
+const SAVED_EVENT = "saved-todo";
+const STORAGE_KEY = "TODO_APPS";
 
 document.addEventListener("DOMContentLoaded", () => {
   const submitForm = document.getElementById("form");
+  if (isStorageExist()) {
+    loadDataFromStorage();
+  }
   submitForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
     addTodo();
   });
 });
@@ -20,6 +24,7 @@ const addTodo = () => {
   todos.push(todoObject);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 };
 
 const generateId = () => {
@@ -101,6 +106,7 @@ const addTaskCompleted = (todoId) => {
 
   todoTarget.isCompleted = true;
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 };
 
 const findTodo = (todoId) => {
@@ -117,12 +123,14 @@ const removeTaskFromCompleted = (todoId) => {
 
   todos.splice(todoTarget, 1);
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 };
 const undoTaskFromCompleted = (todoId) => {
   const todoTarget = findTodo(todoId);
   if (todoTarget == null) return;
   todoTarget.isCompleted = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 };
 
 const findTodoIndex = (todoId) => {
@@ -133,3 +141,51 @@ const findTodoIndex = (todoId) => {
   }
   return -1;
 };
+
+const saveData = () => {
+  if (isStorageExist()) {
+    const parsed = JSON.stringify(todos);
+    localStorage.setItem(STORAGE_KEY, parsed);
+    document.dispatchEvent(new Event(SAVED_EVENT));
+  }
+};
+
+const isStorageExist = () => {
+  if (typeof Storage == undefined) {
+    alert("Browser anda tidak mendukung local storage");
+    return false;
+  }
+  return true;
+};
+
+const loadDataFromStorage = () => {
+  const serializedData = localStorage.getItem(STORAGE_KEY);
+  let data = JSON.parse(serializedData);
+
+  if (data !== null) {
+    for (const item of data) {
+      todos.push(item);
+    }
+  }
+  document.dispatchEvent(new Event(RENDER_EVENT));
+};
+
+const showToast = () => {
+  const toastContainer = document.querySelector(".toast"),
+    buttonConfirm = toastContainer.querySelector(".toast-button");
+  if (toastContainer.getAttribute("data-visible") === true) {
+    toastContainer.setAttribute("data-visible", false);
+  } else {
+    toastContainer.setAttribute("data-visible", true);
+  }
+
+  buttonConfirm.addEventListener("click", () => {
+    toastContainer.setAttribute("data-visible", false);
+  });
+  setTimeout(() => {
+    toastContainer.setAttribute("data-visible", false);
+  }, 15000);
+};
+document.addEventListener(SAVED_EVENT, () => {
+  showToast();
+});
