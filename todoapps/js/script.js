@@ -125,6 +125,7 @@ const removeTaskFromCompleted = (todoId) => {
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
 };
+
 const undoTaskFromCompleted = (todoId) => {
   const todoTarget = findTodo(todoId);
   if (todoTarget == null) return;
@@ -135,7 +136,7 @@ const undoTaskFromCompleted = (todoId) => {
 
 const findTodoIndex = (todoId) => {
   for (const index in todos) {
-    if (Object.hasOwnProperty.call(todos, index)) {
+    if (todos[index].id == todoId) {
       return index;
     }
   }

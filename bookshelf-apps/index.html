@@ -20,7 +20,7 @@
   <main>
     <section class="input_section">
       <h2>Masukkan Buku Baru</h2>
-      <form id="inputBook">
+      <form id="input-book">
         <div class="input">
           <label for="inputBookTitle">Judul</label>
           <input id="inputBookTitle" type="text" required>
@@ -37,24 +37,25 @@
           <label for="inputBookIsComplete">Selesai dibaca</label>
           <input id="inputBookIsComplete" type="checkbox">
         </div>
-        <button id="bookSubmit" type="submit">Masukkan Buku ke rak <span>Belum selesai dibaca</span></button>
+        <button id="submit-book" type="submit">Masukkan Buku ke rak <span>Belum selesai dibaca</span></button>
       </form>
     </section>
 
     <section class="search_section">
       <h2>Cari Buku (Opsional)</h2>
-      <form id="searchBook">
+      <form id="search-book">
         <label for="searchBookTitle">Judul</label>
-        <input id="searchBookTitle" type="text">
-        <button id="searchSubmit" type="submit">Cari</button>
+        <input id="searchBookTitle" type="text" required>
+        <button id="submit-search" type="submit">Cari</button>
+        <button class="reset_button button" type="reset">reset form</button>
       </form>
     </section>
 
     <section class="book_shelf">
       <h2>Belum selesai dibaca</h2>
 
-      <div id="incompleteBookshelfList" class="book_list">
-        <article class="book_item">
+      <div id="book-list" class="book_list">
+        <!-- <article class="book_item">
           <h3>Book Title</h3>
           <p>Penulis: John Doe</p>
           <p>Tahun: 2002</p>
@@ -63,15 +64,15 @@
             <button class="green">Selesai dibaca</button>
             <button class="red">Hapus buku</button>
           </div>
-        </article>
+        </article> -->
       </div>
     </section>
 
     <section class="book_shelf">
       <h2>Selesai dibaca</h2>
 
-      <div id="completeBookshelfList" class="book_list">
-        <article class="book_item">
+      <div id="read-book-list" class="book_list">
+        <!-- <article class="book_item">
           <h3>Book Title</h3>
           <p>Penulis: John Doe</p>
           <p>Tahun: 2002</p>
@@ -80,12 +81,12 @@
             <button class="green">Belum selesai di Baca</button>
             <button class="red">Hapus buku</button>
           </div>
-        </article>
+        </article> -->
       </div>
     </section>
   </main>
 
-  <script src="assets/script.js" defer></script>
+  <script src="assets/script.js"></script>
 
 </body>
 
