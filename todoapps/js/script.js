@@ -125,6 +125,7 @@ const removeTaskFromCompleted = (todoId) => {
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
 };
+
 const undoTaskFromCompleted = (todoId) => {
   const todoTarget = findTodo(todoId);
   if (todoTarget == null) return;
