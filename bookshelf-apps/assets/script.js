@@ -2,6 +2,7 @@
 class BookShelf {
   constructor() {
     this.books = [];
+    this.searchedBook = [];
     this.init();
 
     this.formElm;
@@ -10,15 +11,14 @@ class BookShelf {
     this.inputYear;
     this.inputIsComplete;
 
-    this.formSearch = document.querySelector("#search-book");
-    this.inputSearch = this.formSearch.querySelector("#searchBookTitle");
+    this.formSearch;
+    this.inputSearch;
 
     this.bookLists = document.querySelector("#book-list");
     this.readBookLists = document.querySelector("#read-book-list");
   }
 
   init() {
-    this.loadData();
     this.inputBook();
     this.searchBook();
   }
@@ -61,9 +61,41 @@ class BookShelf {
   }
 
   searchBook() {
-    // if (!this.formSearch) {
-    // return;
-    // }
+    this.formSearch = document.querySelector("#search-book");
+    if (!this.formSearch) {
+      return;
+    }
+
+    let buttonSearch = this.formSearch.querySelector(".reset_button");
+
+    this.formSearch.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.searchedBook = this.getSearchBook();
+
+      document.dispatchEvent(new Event(ConstantData.SearchEvent));
+      buttonSearch.classList.add("active");
+    });
+
+    buttonSearch.addEventListener("click", () => {
+      this.formSearch.reset();
+
+      document.dispatchEvent(new Event(ConstantData.RenderEvent));
+      buttonSearch.classList.remove("active");
+    });
+  }
+
+  getSearchBook() {
+    this.inputSearch = this.formSearch.querySelector("#searchBookTitle").value;
+
+    if (typeof this.inputSearch == "string") {
+      return this.books.filter((item) => {
+        let bookTitle = item.title.toLowerCase().split("");
+        let keyword = this.inputSearch.toLowerCase().split("");
+
+        return bookTitle.some((name) => keyword.includes(name));
+      });
+    }
+    return this.books;
   }
 
   loadData() {
@@ -115,8 +147,10 @@ class BookShelf {
       const undoButton = document.createElement("button");
       const trashButton = document.createElement("button");
 
-      undoButton.classList.add("undo_button");
-      trashButton.classList.add("trash_button");
+      undoButton.classList.add("button", "undo_button");
+      undoButton.innerText = "Belum";
+      trashButton.classList.add("button", "trash_button");
+      trashButton.innerText = "hapus";
 
       undoButton.addEventListener("click", () => {
         this.undoReadBook(book.id);
@@ -128,10 +162,11 @@ class BookShelf {
       container.append(undoButton, trashButton);
     } else {
       const checkButton = document.createElement("button");
-      checkButton.classList.add("check_button");
+      checkButton.classList.add("button", "check_button");
+      checkButton.innerText = "sudah";
 
       checkButton.addEventListener("click", () => {
-        addReadBook(book.id);
+        this.addReadBook(book.id);
       });
       container.append(checkButton);
     }
@@ -160,25 +195,12 @@ class BookShelf {
     };
   }
 
-  findBook(bookId) {
-    this.books.filter((item) => item.id === bookId);
-  }
-
-  findBookIndex(bookId) {
-    for (const index in this.books) {
-      if (Object.hasOwnProperty.call(this.books, bookId)) {
-        return index;
-      }
-    }
-    return -1;
-  }
-
   addReadBook(bookId) {
     const target = this.findBook(bookId);
-
-    if (target == null) {
+    if (!target) {
       return;
     }
+
     target.isCompleted = true;
     document.dispatchEvent(new Event(ConstantData.RenderEvent));
     this.saveData();
@@ -187,7 +209,7 @@ class BookShelf {
   undoReadBook(bookId) {
     const target = this.findBook(bookId);
 
-    if (target == null) {
+    if (!target) {
       return;
     }
     target.isCompleted = false;
@@ -196,21 +218,34 @@ class BookShelf {
     this.saveData();
   }
 
+  findBook(bookId) {
+    let book = this.books.filter((item) => item.id === bookId);
+    return book[0];
+  }
+
   removeReadBook(bookId) {
-    const target = findBookIndex(bookId);
+    const target = this.findBookIndex(bookId);
     if (target == null) {
       return;
     }
-
     this.books.splice(target, 1);
+
     document.dispatchEvent(new Event(ConstantData.RenderEvent));
+
     this.saveData();
+  }
+
+  findBookIndex(bookId) {
+    return this.books.findIndex((item) => item.id === bookId);
   }
 }
 
 class ConstantData {
   static get RenderEvent() {
     return "render-book";
+  }
+  static get SearchEvent() {
+    return "search-book";
   }
   static get SavedEvent() {
     return "saved-book";
@@ -231,6 +266,24 @@ document.addEventListener(ConstantData.RenderEvent, () => {
   readBookLists.innerHTML = "";
 
   for (const item of bookShelf.books) {
+    const itemElm = bookShelf.makeBookElm(item);
+
+    if (!item.isCompleted) {
+      bookLists.append(itemElm);
+    } else {
+      readBookLists.append(itemElm);
+    }
+  }
+});
+
+document.addEventListener(ConstantData.SearchEvent, () => {
+  const bookLists = bookShelf.bookLists;
+  const readBookLists = bookShelf.readBookLists;
+
+  bookLists.innerHTML = "";
+  readBookLists.innerHTML = "";
+
+  for (const item of bookShelf.searchedBook) {
     const itemElm = bookShelf.makeBookElm(item);
 
     if (!item.isCompleted) {

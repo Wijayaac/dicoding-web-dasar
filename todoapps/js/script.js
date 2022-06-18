@@ -136,7 +136,7 @@ const undoTaskFromCompleted = (todoId) => {
 
 const findTodoIndex = (todoId) => {
   for (const index in todos) {
-    if (Object.hasOwnProperty.call(todos, index)) {
+    if (todos[index].id == todoId) {
       return index;
     }
   }
