@@ -130,7 +130,7 @@ class BookShelf {
     const bookAuthor = document.createElement("p");
     const bookYear = document.createElement("p");
     const textContainer = document.createElement("div");
-    const container = document.createElement("div");
+    const container = document.createElement("article");
 
     bookName.innerText = book.title;
     bookAuthor.innerText = book.author;
@@ -204,6 +204,8 @@ class BookShelf {
     target.isCompleted = true;
     document.dispatchEvent(new Event(ConstantData.RenderEvent));
     this.saveData();
+
+    this.showToast("Buku telah di baca");
   }
 
   undoReadBook(bookId) {
@@ -216,6 +218,7 @@ class BookShelf {
     document.dispatchEvent(new Event(ConstantData.RenderEvent));
 
     this.saveData();
+    this.showToast("Buku telah terupdate");
   }
 
   findBook(bookId) {
@@ -237,6 +240,31 @@ class BookShelf {
 
   findBookIndex(bookId) {
     return this.books.findIndex((item) => item.id === bookId);
+  }
+
+  showToast(message) {
+    let toastElm = document.querySelector(".toast");
+    let toastMessage = toastElm.querySelector(".toast_message");
+    let toastButton = toastElm.querySelector(".toast_confirm");
+
+    if (toastElm.getAttribute("data-visible") === "false") {
+      toastMessage.innerText = message;
+      toastElm.setAttribute("data-visible", true);
+    }
+
+    setTimeout(() => {
+      this.hideToast(toastElm);
+    }, 1200);
+
+    toastButton.addEventListener("click", () => {
+      return this.hideToast(toastElm);
+    });
+  }
+
+  hideToast(toast) {
+    if (toast.getAttribute("data-visible") === "true") {
+      toast.setAttribute("data-visible", false);
+    }
   }
 }
 
