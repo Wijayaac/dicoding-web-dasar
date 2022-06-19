@@ -58,6 +58,8 @@ class BookShelf {
     document.dispatchEvent(new Event(ConstantData.RenderEvent));
 
     this.saveData();
+
+    this.showToast("Buku berhasil ditambahkan");
   }
 
   searchBook() {
