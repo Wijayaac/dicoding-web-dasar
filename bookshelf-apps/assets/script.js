@@ -230,14 +230,32 @@ class BookShelf {
 
   removeReadBook(bookId) {
     const target = this.findBookIndex(bookId);
+    let modalElm = document.querySelector(".modal");
     if (target == null) {
       return;
     }
-    this.books.splice(target, 1);
 
-    document.dispatchEvent(new Event(ConstantData.RenderEvent));
+    if (!modalElm) {
+      return;
+    }
 
-    this.saveData();
+    let buttonConfirm = modalElm.querySelector(".modal_confirm"),
+      buttonReject = modalElm.querySelector(".modal_reject");
+
+    modalElm.setAttribute("data-visible", true);
+
+    buttonConfirm.addEventListener("click", () => {
+      this.books.splice(target, 1);
+      document.dispatchEvent(new Event(ConstantData.RenderEvent));
+      this.saveData();
+      modalElm.setAttribute("data-visible", false);
+    });
+
+    buttonReject.addEventListener("click", () => {
+      if (modalElm.getAttribute("data-visible") === "true") {
+        modalElm.setAttribute("data-visible", false);
+      }
+    });
   }
 
   findBookIndex(bookId) {
