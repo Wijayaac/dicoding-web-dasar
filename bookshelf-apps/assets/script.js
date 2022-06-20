@@ -90,16 +90,9 @@ class BookShelf {
     this.inputSearch = this.formSearch.querySelector("#searchBookTitle").value;
 
     if (typeof this.inputSearch == "string") {
-      return this.books.filter((item) => {
-        let bookTitle = item.title.toLowerCase().split("");
-        let keyword = this.inputSearch.toLowerCase().split("");
-
-        // search by full title
-        return item.title === this.inputSearch.toLowerCase();
-
-        // search by character contains
-        // return bookTitle.some((name) => keyword.includes(name));
-      });
+      return this.books.filter(
+        (item) => item.title === this.inputSearch.toLowerCase()
+      );
     }
     return this.books;
   }
