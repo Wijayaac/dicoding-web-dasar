@@ -49,7 +49,7 @@ class BookShelf {
       id,
       this.inputTitle,
       this.inputAuthor,
-      this.inputYear,
+      parseInt(this.inputYear),
       this.inputIsComplete
     );
 
@@ -94,7 +94,11 @@ class BookShelf {
         let bookTitle = item.title.toLowerCase().split("");
         let keyword = this.inputSearch.toLowerCase().split("");
 
-        return bookTitle.some((name) => keyword.includes(name));
+        // search by full title
+        return item.title === this.inputSearch.toLowerCase();
+
+        // search by character contains
+        // return bookTitle.some((name) => keyword.includes(name));
       });
     }
     return this.books;
@@ -134,6 +138,11 @@ class BookShelf {
     const textContainer = document.createElement("div");
     const container = document.createElement("article");
 
+    const buttonContainer = document.createElement("div");
+    const checkButton = document.createElement("button");
+    const undoButton = document.createElement("button");
+    const trashButton = document.createElement("button");
+
     bookName.innerText = book.title;
     bookAuthor.innerText = book.author;
     bookYear.innerText = book.year;
@@ -142,36 +151,39 @@ class BookShelf {
     textContainer.append(bookName, bookAuthor, bookYear);
 
     container.classList.add("book_item");
+
+    buttonContainer.classList.add("read_action");
+    checkButton.classList.add("button", "check_button");
+    undoButton.classList.add("button", "undo_button");
+    trashButton.classList.add("button", "trash_button");
+
+    checkButton.innerText = "Selesai dibaca";
+    undoButton.innerText = "Belum dibaca";
+    trashButton.innerText = "Hapus buku";
+
     container.append(textContainer);
     container.setAttribute("id", `book-${book.id}`);
 
+    checkButton.addEventListener("click", () => {
+      this.addReadBook(book.id);
+    });
+
+    undoButton.addEventListener("click", () => {
+      this.undoReadBook(book.id);
+    });
+
+    trashButton.addEventListener("click", () => {
+      this.removeReadBook(book.id);
+    });
+
     if (book.isCompleted) {
-      const undoButton = document.createElement("button");
-      const trashButton = document.createElement("button");
-
-      undoButton.classList.add("button", "undo_button");
-      undoButton.innerText = "Belum";
-      trashButton.classList.add("button", "trash_button");
-      trashButton.innerText = "hapus";
-
-      undoButton.addEventListener("click", () => {
-        this.undoReadBook(book.id);
-      });
-      trashButton.addEventListener("click", () => {
-        this.removeReadBook(book.id);
-      });
-
-      container.append(undoButton, trashButton);
+      buttonContainer.append(undoButton, trashButton);
+      container.append(buttonContainer);
     } else {
-      const checkButton = document.createElement("button");
-      checkButton.classList.add("button", "check_button");
-      checkButton.innerText = "sudah";
-
-      checkButton.addEventListener("click", () => {
-        this.addReadBook(book.id);
-      });
-      container.append(checkButton);
+      buttonContainer.append(checkButton, trashButton);
+      container.append(buttonContainer);
     }
+
     return container;
   }
 
